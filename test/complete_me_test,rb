@@ -33,7 +33,7 @@ def test_root_can_have_children
   assert_equal Hash["a", Node.new], cm.root.children
 end
 
-def test_insert_splits_up_characters_and_adds_each_letter_into_the_trie
+def test_insert_takes_each_characters_and_adds_each_letter_into_the_trie
 skip
 end
 
