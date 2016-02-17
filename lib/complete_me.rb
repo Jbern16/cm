@@ -8,21 +8,22 @@ class CompleteMe
   def initialize
     @root= Node.new
     @word_count = 0
+    @word= ""
   end
 
-  def insert_word(word, i=0,current_node=@root)
-    unless current_node.children.include?(word[i])
-      current_node.children[word[i]] = Node.new
-      flag_word(word, i, current_node)
-      insert_word(word, i+1, current_node.children[word[i]]) if i < word.length - 1
+  def insert(word, n=0,current_node=@root)
+    unless current_node.children.include?(word[n])
+      current_node.children[word[n]] = Node.new
+      flag_word(word, n, current_node)
+      insert(word, n+1, current_node.children[word[n]]) if n < word.length - 1
     else
-      insert_word(word, i+1, current_node.children[word[i]]) if i < word.length - 1
+      insert(word, n+1, current_node.children[word[n]]) if n < word.length - 1
     end
   end
 
-  def flag_word(word, i, current_node)
-    if i == word.length - 1
-      current_node.children[word[i]].word_end = true
+  def flag_word(word, n, current_node)
+    if n == word.length - 1
+      current_node.children[word[n]].word_end = true
       @word_count += 1
     end
   end
@@ -34,10 +35,27 @@ class CompleteMe
   def load(file)
     content = File.read(file)
     content.split("\n").each do |word|
-      insert_word(word)
+      insert(word)
     end
     "You've inserted #{count} words!"
   end
+
+  # def suggest(string, n=0,  current_node=@root)
+
+  #   unless current_node.children = Hash.new
+  #     current_node.children.each_key do |key|
+  #       word += key
+  #       if current_node.end_of_word
+  #         suggestions << words
+  #       end
+  #      suggest(word, suggestions, current_node.children[word[n]])
+  #     end
+  #   end
+
+
+
+
+
 
 
 
