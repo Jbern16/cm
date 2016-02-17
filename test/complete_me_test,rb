@@ -1,7 +1,40 @@
 gem 'minitest', '>= 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative 'complete_me'
-require_relative 'node'
+require_relative '../lib/complete_me'
+
 
 class CompleteMeTest < Minitest::Test
+
+attr_reader :cm
+
+def setup
+  @cm = CompleteMe.new
+end
+
+def test_if_complete_me_exists
+  assert_equal cm, cm
+end
+
+def test_root_is_created_when_trie_is_made
+  assert cm.root
+end
+
+def test_root_has_nil_children_when_intialized
+  assert_equal nil, cm.root.children
+end
+
+def test_root_has_false_valie_when_initialized
+  refute cm.root.value
+end
+
+def test_root_can_have_children
+  cm.root.children = Hash["a", Node.new]
+  assert_equal Hash["a", Node.new], cm.root.children
+end
+
+def test_insert_splits_up_characters_and_adds_each_letter_into_the_trie
+skip
+end
+
+end
