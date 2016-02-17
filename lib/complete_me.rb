@@ -12,13 +12,16 @@ class CompleteMe
     word = word.downcase
     unless current_node.children.include?(word[n])
       current_node.children[word[n]] = Node.new
-      if n == word.length
-      current_node.value = true
-      end
+      flag_word(word, n, current_node)
       insert_word(word, n+1, current_node.children[word[n]]) if n < word.length -1
     else
       insert_word(word, n+1, current_node.children[word[n]]) if n < word.length - 1
     end
   end
 
+  def flag_word(word, n, current_node)
+    if word[n] == word[-1]
+      current_node.children[word[n]].value = true
+    end
+  end
 end
