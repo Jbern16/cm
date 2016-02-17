@@ -23,7 +23,7 @@ class CompleteMe
 
   def flag_word(word, n, current_node)
     if n == word.length - 1
-      current_node.children[word[n]].value = true
+      current_node.children[word[n]].word_end = true
       @word_count += 1
     end
   end

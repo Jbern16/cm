@@ -13,7 +13,7 @@ class NodeTest < Minitest::Test
 
   def test_node_has_default_value_of_false
     node = Node.new
-    refute node.value
+    refute node.word_end
   end
 
   def test_node_has_default_children_of_empty_hash
