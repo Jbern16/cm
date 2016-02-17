@@ -2,6 +2,7 @@ gem 'minitest', '>= 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/complete_me'
+require_relative '../lib/node'
 
 
 class CompleteMeTest < Minitest::Test
@@ -21,7 +22,7 @@ def test_root_is_created_when_trie_is_made
 end
 
 def test_root_has_nil_children_when_intialized
-  assert_equal nil, cm.root.children
+  assert_equal Hash.new, cm.root.children
 end
 
 def test_root_has_false_valie_when_initialized
@@ -29,11 +30,20 @@ def test_root_has_false_valie_when_initialized
 end
 
 def test_root_can_have_children
+  skip
   cm.root.children = Hash["a", Node.new]
   assert_equal Hash["a", Node.new], cm.root.children
 end
 
 def test_insert_takes_each_characters_and_adds_each_letter_into_the_trie
+  word = "Dog"
+  cm.insert_word(word)
+  assert cm.root.children.include?("d")
+  assert cm.root.children.children.include?("o")
+  assert cm.root.children.children.children.include?("g")
+end
+
+def test_last_letter_in_word_is_flagged_to_signify_that_letter_signifies_end_of_word
 skip
 end
 
