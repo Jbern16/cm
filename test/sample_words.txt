@@ -1,0 +1,10 @@
+apple
+application
+box
+boot
+ban
+cat
+car
+bar
+jar
+zebra
