@@ -3,7 +3,7 @@ require_relative 'node'
 
 class CompleteMe
 
-  attr_accessor :root :weights
+  attr_accessor :root, :weights
 
   def initialize
     @root= Node.new
@@ -43,7 +43,7 @@ class CompleteMe
   def suggest(string, current_node=@root)
     return "Enter at least 1 letter" if string == ""
     @suggestions = []
-    @word = string
+    @word = ""
     string.each_char do |chr|
       if current_node.children.keys.include?(chr)
         current_node = current_node.children[chr]
@@ -51,25 +51,27 @@ class CompleteMe
         return "Not there"
       end
     end
-
     suggest_helper(string, current_node)
-
-    sorted_names = []
-    unless weights == {}
-      weights.each_key do |key|
-        weights[key].sort.reverse.flatten.each do |word|
-          weights << elements if element.class == String
-        end
-      end
+    unless weights[string] == nil
+      weighted_words = weights[string].sort_by do |word, weight|
+        weight
+      end.reverse.flatten.find_all do |e|
+      e.class == String
     end
-    temp = temp.uniq
+    weighted_suggestions = weighted_words.concat(@suggestions).uniq
   end
+    unless weights == {}
+      weighted_suggestions
+    else
+      @suggestions
+    end
+ end
 
   def suggest_helper(string, current_node)
     unless current_node.children == {}
       current_node.children.each_key do |letter|
          @word << letter
-         @suggestions << @word if current_node.children[letter].word_end
+         @suggestions << (string + @word) if current_node.children[letter].word_end
          suggest_helper(string, current_node.children[letter])
          @word = @word.chop
        end
@@ -82,7 +84,7 @@ class CompleteMe
       weights[string][word] += 1
     else
       weights[string] = Hash.new(0)
-      weights[string] += 1
+      weights[string][word] += 1
     end
   end
 

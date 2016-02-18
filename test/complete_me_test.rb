@@ -66,8 +66,8 @@ def test_doesnt_count_word_if_inserted_twice
 end
 
 
-def test_load_adds_all_words_into_the_tree
-  assert_equal "You've inserted 10 words!", cm.load("sample_words.txt")
+def test_populate_adds_all_words_into_the_tree
+  assert_equal "You've inserted 10 words!", cm.populate("sample_words.txt")
 end
 
 def test_suggest_proper_words_when_used
@@ -102,7 +102,11 @@ def test_when_word_is_selected_it_is_prioritized_before_other_suggestions
   cm.insert("pizza")
   cm.insert("pizzeria")
   cm.insert("pizzicato")
-  assert_equal ["pizzeria", "pizza", "pizzicato"], cm.select("pizzeria")
+  cm.select("pizz", "pizzeria")
+  cm.select("pizz", "pizzeria")
+  cm.select("pizz", "pizza")
+  cm.select("piz", "pizzicato")
+  assert_equal ["pizzeria", "pizza", "pizzicato"], cm.suggest("pizz")
 end
 
 
