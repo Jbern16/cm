@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 gem 'minitest', '>= 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
@@ -67,7 +69,7 @@ class CompleteMeTest < Minitest::Test
 
 
   def test_populate_adds_all_words_into_the_tree
-    sample_words = File.read("sample_words.txt")
+    sample_words = File.read("test/sample_words.txt")
     assert_equal "You've inserted 10 words!", cm.populate(sample_words)
   end
 
