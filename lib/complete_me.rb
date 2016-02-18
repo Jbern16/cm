@@ -3,11 +3,12 @@ require_relative 'node'
 
 class CompleteMe
 
-  attr_reader :root
+  attr_accessor :root :weights
 
   def initialize
     @root= Node.new
     @word_count = 0
+    @weights = Hash.new
   end
 
   def insert(word, n=0,current_node=@root)
@@ -31,7 +32,7 @@ class CompleteMe
     @word_count
   end
 
-  def load(file)
+  def populate(file)
     content = File.read(file)
     content.split("\n").each do |word|
       insert(word)
@@ -50,7 +51,18 @@ class CompleteMe
         return "Not there"
       end
     end
+
     suggest_helper(string, current_node)
+
+    sorted_names = []
+    unless weights == {}
+      weights.each_key do |key|
+        weights[key].sort.reverse.flatten.each do |word|
+          weights << elements if element.class == String
+        end
+      end
+    end
+    temp = temp.uniq
   end
 
   def suggest_helper(string, current_node)
@@ -62,14 +74,19 @@ class CompleteMe
          @word = @word.chop
        end
      end
-     @suggestions.select
+     @suggestions
   end
 
-  def select(string)
-    if @suggestions.include?(string)
-      @suggestions[0] = string
+  def select(string, word)
+    if weights.keys.include?(string)
+      weights[string][word] += 1
+    else
+      weights[string] = Hash.new(0)
+      weights[string] += 1
     end
   end
+
+
 
 
 
