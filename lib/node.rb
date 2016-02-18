@@ -6,4 +6,5 @@ class Node
     @word_end = false
     @children = Hash.new
   end
+
 end

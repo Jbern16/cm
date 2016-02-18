@@ -1,17 +1,19 @@
+require 'simplecov'
+SimpleCov.start
 gem 'minitest', '>= 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'pry'
-require_relative '../lib/complete_me'
+require_relative '../lib/trie'
 require_relative '../lib/node'
 
 
-class CompleteMeTest < Minitest::Test
+class TrieTest < Minitest::Test
 
 attr_reader :cm
 
 def setup
-  @cm = CompleteMe.new
+  @cm = Trie.new
 end
 
 def test_if_complete_me_exists
@@ -54,7 +56,7 @@ def test_can_count_amount_of_words_inserted_into_the_tree
   cm.insert("cat")
   cm.insert("bat")
   cm.insert("cow")
-  assert_equal 4, cm.count
+  assert_equal 4, cm.word_count
 end
 
 def test_doesnt_count_word_if_inserted_twice
@@ -62,12 +64,13 @@ def test_doesnt_count_word_if_inserted_twice
   cm.insert("dog")
   cm.insert("bat")
   cm.insert("cow")
-  assert_equal 3, cm.count
+  assert_equal 3, cm.word_count
 end
 
 
 def test_populate_adds_all_words_into_the_tree
-  assert_equal "You've inserted 10 words!", cm.populate("sample_words.txt")
+  sample_words = File.read("sample_words.txt")
+  assert_equal "You've inserted 10 words!", cm.populate(sample_words)
 end
 
 def test_suggest_proper_words_when_used
@@ -81,21 +84,21 @@ def test_doesnt_suggest_words_if_string_is_not_part_of_any_words
   cm.insert("pizza")
   cm.insert("pizzeria")
   cm.insert("pizzicato")
-  assert_equal "Not there", cm.suggest("ba")
+  assert_equal [], cm.suggest("ba")
 end
 
 def test_doesnt_suggest_words_when_given_empty_string
   cm.insert("pizza")
   cm.insert("pizzeria")
   cm.insert("pizzicato")
-  assert_equal "Enter at least 1 letter" , cm.suggest("")
+  assert_equal "Invalid Input" , cm.suggest("")
 end
 
 def test_suggest_doesnt_run_when_given_invalid_characters
   cm.insert("pizza")
   cm.insert("pizzeria")
   cm.insert("pizzicato")
-  assert_equal "Not there", cm.suggest("p&")
+  assert_equal "Invalid Input", cm.suggest("p&")
 end
 
 def test_when_word_is_selected_it_is_prioritized_before_other_suggestions
