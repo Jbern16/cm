@@ -8,7 +8,6 @@ class CompleteMe
   def initialize
     @root= Node.new
     @word_count = 0
-    @word= ""
   end
 
   def insert(word, n=0,current_node=@root)
@@ -40,17 +39,43 @@ class CompleteMe
     "You've inserted #{count} words!"
   end
 
-  # def suggest(string, n=0,  current_node=@root)
+  def suggest(string, current_node=@root)
+    return "Enter at least 1 letter" if string == ""
+    @suggestions = []
+    @word = string
+    string.each_char do |chr|
+      if current_node.children.keys.include?(chr)
+        current_node = current_node.children[chr]
+      else
+        return "Not there"
+      end
+    end
+    suggest_helper(string, current_node)
+  end
 
-  #   unless current_node.children = Hash.new
-  #     current_node.children.each_key do |key|
-  #       word += key
-  #       if current_node.end_of_word
-  #         suggestions << words
-  #       end
-  #      suggest(word, suggestions, current_node.children[word[n]])
-  #     end
-  #   end
+  def suggest_helper(string, current_node)
+    unless current_node.children == {}
+      current_node.children.each_key do |letter|
+         @word << letter
+         @suggestions << @word if current_node.children[letter].word_end
+         suggest_helper(string, current_node.children[letter])
+         @word = @word.chop
+       end
+     end
+     @suggestions.select
+  end
+
+  def select(string)
+    if @suggestions.include?(string)
+      @suggestions[0] = string
+    end
+  end
+
+
+
+
+
+
 
 
 

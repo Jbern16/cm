@@ -74,8 +74,39 @@ def test_suggest_proper_words_when_used
   cm.insert("pizza")
   cm.insert("pizzeria")
   cm.insert("pizzicato")
-  binding.pry
   assert_equal ["pizza", "pizzeria", "pizzicato"], cm.suggest("piz")
 end
+
+def test_doesnt_suggest_words_if_string_is_not_part_of_any_words
+  cm.insert("pizza")
+  cm.insert("pizzeria")
+  cm.insert("pizzicato")
+  assert_equal "Not there", cm.suggest("ba")
+end
+
+def test_doesnt_suggest_words_when_given_empty_string
+  cm.insert("pizza")
+  cm.insert("pizzeria")
+  cm.insert("pizzicato")
+  assert_equal "Enter at least 1 letter" , cm.suggest("")
+end
+
+def test_suggest_doesnt_run_when_given_invalid_characters
+  cm.insert("pizza")
+  cm.insert("pizzeria")
+  cm.insert("pizzicato")
+  assert_equal "Not there", cm.suggest("p&")
+end
+
+def test_when_word_is_selected_it_is_prioritized_before_other_suggestions
+  cm.insert("pizza")
+  cm.insert("pizzeria")
+  cm.insert("pizzicato")
+  assert_equal ["pizzeria", "pizza", "pizzicato"], cm.select("pizzeria")
+end
+
+
+
+
 
 end
