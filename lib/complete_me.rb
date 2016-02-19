@@ -3,11 +3,11 @@ require_relative 'node'
 
 class CompleteMe
 
-  attr_accessor :root, :weights, :word_count
+  attr_accessor :root, :weights, :count
 
   def initialize
     @root= Node.new
-    @word_count = 0
+    @count = 0
     @weights = Hash.new
   end
 
@@ -22,7 +22,7 @@ class CompleteMe
   def flag_word(word, n, current_node)
     if n == word.length - 1
       current_node.children[word[n]].word_end = true
-      @word_count += 1
+      @count += 1
     end
   end
 
@@ -30,7 +30,7 @@ class CompleteMe
     file.split("\n").each do |word|
       insert(word)
     end
-    "You've inserted #{word_count} words!"
+    "You've inserted #{count} words!"
   end
 
   def suggest(string, current_node=@root)

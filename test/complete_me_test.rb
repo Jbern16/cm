@@ -55,7 +55,7 @@ class CompleteMeTest < Minitest::Test
     cm.insert("cat")
     cm.insert("bat")
     cm.insert("cow")
-    assert_equal 4, cm.word_count
+    assert_equal 4, cm.count
   end
 
   def test_doesnt_count_word_if_inserted_twice
@@ -63,7 +63,7 @@ class CompleteMeTest < Minitest::Test
     cm.insert("dog")
     cm.insert("bat")
     cm.insert("cow")
-    assert_equal 3, cm.word_count
+    assert_equal 3, cm.count
   end
 
 
