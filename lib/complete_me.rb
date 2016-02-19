@@ -49,7 +49,7 @@ class CompleteMe
 
   def valid_input?(string)
     return false if string.empty?
-    string.chars.all?{|letter| all_letters = ("a".."z").to_a.include?(letter)}
+    string.chars.all?{|letter| ("a".."z").to_a.include?(letter)}
   end
 
   def tree_nav_to_string_for_suggest(string, current_node)
