@@ -1,5 +1,5 @@
 # **CompleteMe**
-### **Textual auto-completion using a trie structure**
+### **Text auto-completion using a trie data structure**
 
 #### Turing - 1602 - Echo
 
